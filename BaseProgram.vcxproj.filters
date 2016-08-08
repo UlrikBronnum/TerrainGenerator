@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\ofApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GraphicMesh.cpp" />
+    <ClCompile Include="src\Gui.cpp" />
+    <ClCompile Include="src\ImageProcessing.cpp" />
+    <ClCompile Include="src\MainApp.cpp" />
+    <ClCompile Include="src\TextureContainer.cpp" />
+    <ClCompile Include="src\ImageFilter.cpp" />
+    <ClCompile Include="src\lalala.cpp" />
+    <ClCompile Include="src\MoveCam.cpp" />
+    <ClCompile Include="src\WaterErosion.cpp" />
+    <ClCompile Include="src\BaseHeightmapCreater.cpp" />
+    <ClCompile Include="src\TreeGenerator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ofApp.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GraphicMesh.h" />
+    <ClInclude Include="src\Gui.h" />
+    <ClInclude Include="src\ImageProcessing.h" />
+    <ClInclude Include="src\MainApp.h" />
+    <ClInclude Include="src\TextureContainer.h" />
+    <ClInclude Include="src\ImageFilter.h" />
+    <ClInclude Include="src\lalala.h" />
+    <ClInclude Include="src\MoveCam.h" />
+    <ClInclude Include="src\WaterErosion.h" />
+    <ClInclude Include="src\BaseHeightmapCreater.h" />
+    <ClInclude Include="src\TreeGenerator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
+</Project>

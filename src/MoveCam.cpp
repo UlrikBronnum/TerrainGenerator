@@ -1,0 +1,115 @@
+#include "MoveCam.h"
+
+
+
+MoveCam::MoveCam()
+{
+	prevRotX = 0.0f;
+	prevRotY = 0.0f;
+	speed =300.0f;
+	//camera.setNearClip(1.0f);
+	//camera.setFarClip(20000.0f);
+	setNearClip(1.0f);
+	setFarClip(20000.0f);
+	registerEvent();
+}
+
+
+MoveCam::~MoveCam()
+{
+}
+void MoveCam::setup()
+{
+
+}
+void MoveCam::update()
+{
+	uint64_t	time = ofGetElapsedTimeMillis();
+	
+	unsigned int diff = time - lastTime;
+
+	delta = (float)diff / 1000.0f;
+
+
+	lastTime = time;
+}
+void MoveCam::keyPressed(ofKeyEventArgs & args)
+{
+
+	if (args.key == 357 || args.key == 119) {
+		//ofVec3f pos = camera.getPosition();
+		//ofVec3f dir = -camera.getZAxis();
+
+		ofVec3f pos = getPosition();
+		ofVec3f dir = -getZAxis();
+		pos += dir * speed * delta;
+
+		setPosition(pos);
+		cameraBody.setPosition(pos);
+	}
+
+	if (args.key == 359 || args.key == 115) {
+		//ofVec3f pos = camera.getPosition();
+		//ofVec3f dir = camera.getZAxis();
+
+		ofVec3f pos = getPosition();
+		ofVec3f dir = getZAxis();
+
+		pos += dir * speed * delta;
+
+		setPosition(pos);
+		cameraBody.setPosition(pos);
+	}
+
+	if (args.key == 356 || args.key == 97)
+	{
+		ofVec3f pos = getPosition();
+		ofVec3f dir = -getXAxis();
+		pos += dir * speed * delta;
+
+		setPosition(pos);
+		cameraBody.setPosition(pos);
+	}
+	if (args.key == 358 || args.key == 100)
+	{
+		ofVec3f pos = getPosition();
+		ofVec3f dir = getXAxis();
+		pos += dir * speed * delta;
+
+		setPosition(pos);
+		cameraBody.setPosition(pos);
+	}
+
+	
+}
+void MoveCam::mouseDragged(ofMouseEventArgs & args)
+{
+	if(args.button == 2){
+		float size = ofGetWindowHeight();
+		float	rotX = float(args.x) - prevRotX;
+		rotate(-rotX / 2, cameraBody.getZAxis());
+		cameraBody.rotate(-rotX / 2, cameraBody.getZAxis());
+		prevRotX = float(args.x);
+
+		float rotY = float(args.y) - prevRotY;
+		rotate(-rotY / 2, getXAxis());
+		prevRotY = float(args.y);
+	}
+}
+// Key activate events
+void MoveCam::registerEvent()
+{
+	ofAddListener(ofEvents().keyPressed, this, &MoveCam::keyPressed);
+	ofAddListener(ofEvents().mouseDragged, this, &MoveCam::mouseDragged);
+}
+/*
+void MoveCam::lookAt(ofVec3f position) 
+{ 
+	lookAt(position); 
+}
+*/
+void MoveCam::setCamPosition(ofVec3f position)
+{
+	cameraBody.setGlobalPosition(position + ofVec3f(0, 0, 500));
+	setGlobalPosition(position + ofVec3f(0, 0, 500));
+}
