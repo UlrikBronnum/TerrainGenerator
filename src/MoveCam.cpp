@@ -6,13 +6,18 @@ MoveCam::MoveCam()
 {
 	prevRotX = 0.0f;
 	prevRotY = 0.0f;
-	speed =300.0f;
+	speed = 300.0f;
 	//camera.setNearClip(1.0f);
 	//camera.setFarClip(20000.0f);
 	setNearClip(1.0f);
 	setFarClip(20000.0f);
 	registerEvent();
+
+
+	setScale(1, 1, 1);
+	cameraBody.setScale(1, 1, 1);
 }
+
 
 
 MoveCam::~MoveCam()
@@ -37,8 +42,6 @@ void MoveCam::keyPressed(ofKeyEventArgs & args)
 {
 
 	if (args.key == 357 || args.key == 119) {
-		//ofVec3f pos = camera.getPosition();
-		//ofVec3f dir = -camera.getZAxis();
 
 		ofVec3f pos = getPosition();
 		ofVec3f dir = -getZAxis();
@@ -49,9 +52,6 @@ void MoveCam::keyPressed(ofKeyEventArgs & args)
 	}
 
 	if (args.key == 359 || args.key == 115) {
-		//ofVec3f pos = camera.getPosition();
-		//ofVec3f dir = camera.getZAxis();
-
 		ofVec3f pos = getPosition();
 		ofVec3f dir = getZAxis();
 
@@ -82,11 +82,16 @@ void MoveCam::keyPressed(ofKeyEventArgs & args)
 
 	
 }
+void MoveCam::mouseMoved(ofMouseEventArgs & args)
+{
+	prevRotX = float(args.x);
+	prevRotY = float(args.y);
+}
 void MoveCam::mouseDragged(ofMouseEventArgs & args)
 {
 	if(args.button == 2){
 		float size = ofGetWindowHeight();
-		float	rotX = float(args.x) - prevRotX;
+		float	rotX = (float(args.x) - prevRotX);
 		rotate(-rotX / 2, cameraBody.getZAxis());
 		cameraBody.rotate(-rotX / 2, cameraBody.getZAxis());
 		prevRotX = float(args.x);
@@ -101,13 +106,15 @@ void MoveCam::registerEvent()
 {
 	ofAddListener(ofEvents().keyPressed, this, &MoveCam::keyPressed);
 	ofAddListener(ofEvents().mouseDragged, this, &MoveCam::mouseDragged);
+	ofAddListener(ofEvents().mouseMoved, this, &MoveCam::mouseMoved);
 }
-/*
-void MoveCam::lookAt(ofVec3f position) 
+
+void MoveCam::rotateToPoint(ofVec3f position) 
 { 
 	lookAt(position); 
+	cameraBody.lookAt(position);
 }
-*/
+
 void MoveCam::setCamPosition(ofVec3f position)
 {
 	cameraBody.setGlobalPosition(position + ofVec3f(0, 0, 500));

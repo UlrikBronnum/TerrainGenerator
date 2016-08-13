@@ -18,6 +18,9 @@
     <ClCompile Include="src\WaterErosion.cpp" />
     <ClCompile Include="src\BaseHeightmapCreater.cpp" />
     <ClCompile Include="src\TreeGenerator.cpp" />
+    <ClCompile Include="src\WorldObject.cpp" />
+    <ClCompile Include="src\ShaderContainer.cpp" />
+    <ClCompile Include="src\MeshContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -39,6 +42,9 @@
     <ClInclude Include="src\WaterErosion.h" />
     <ClInclude Include="src\BaseHeightmapCreater.h" />
     <ClInclude Include="src\TreeGenerator.h" />
+    <ClInclude Include="src\WorldObject.h" />
+    <ClInclude Include="src\ShaderContainer.h" />
+    <ClInclude Include="src\MeshContainer.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

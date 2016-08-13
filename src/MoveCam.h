@@ -12,6 +12,7 @@ public:
 	void update();
 
 	// Mouse interactions
+	void mouseMoved(ofMouseEventArgs & args);
 	void mouseDragged(ofMouseEventArgs & args);
 	// Key interactions
 	void keyPressed(ofKeyEventArgs & args);
@@ -19,7 +20,7 @@ public:
 	//void begin() { camera.begin(); }
 	//void end() { camera.end(); }
 
-	//void lookAt(ofVec3f position);
+	void rotateToPoint(ofVec3f position);
 	void setCamPosition(ofVec3f position);
 
 	//ofVec3f getForward() { return camera.getLookAtDir(); }

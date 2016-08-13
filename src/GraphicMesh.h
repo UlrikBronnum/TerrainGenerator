@@ -43,6 +43,8 @@ public:
 
 	void clear() { mesh.clear(); }
 
+	void save();
+
 protected:
 
 	ofVboMesh		mesh;

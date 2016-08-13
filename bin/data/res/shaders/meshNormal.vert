@@ -8,7 +8,9 @@ uniform mat4 projectionMatrix;
 uniform mat4 textureMatrix;
 uniform mat4 modelViewProjectionMatrix;
 
+
 uniform vec4 lightPos = vec4(100,100,100,1);
+
 
 in vec4 position;
 in vec4 color;
@@ -30,8 +32,8 @@ void main()
     // here we move the texture coordinates
     varyingtexcoord = texcoord ;
 
-    vec3 n = normalize(vec4(normalize(normal),0.0)).xyz;//modelViewMatrix *
-    vec3 t = normalize(vec4(normalize(tangent),0.0)).xyz;//modelViewMatrix *
+    vec3 n = normalize(vec4(normalize(normal),0.0)).xyz;//
+    vec3 t = normalize(vec4(normalize(tangent),0.0)).xyz;//
     t = normalize(t - dot(t,n) * n);
     vec3 bT = cross(t,n);
     tbnMat = mat3(t,bT,n);

@@ -237,7 +237,10 @@ void GraphicMesh::calcTangents() {
 	}
 		
 }
-
+void GraphicMesh::save() 
+{
+	mesh.save("model.ply");
+}
 /*
 //--------------------------------------------------------------
 void GraphicMesh::addFace(ofMesh& mesh, ofVec3f a, ofVec3f b, ofVec3f c) {

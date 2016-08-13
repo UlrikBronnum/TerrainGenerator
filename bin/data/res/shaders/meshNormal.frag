@@ -49,6 +49,6 @@ void main()
     vec3 lightAmbient   = pColor * ambientLight;
 
     outputColor  = vec4(lightAmbient + lightDiffuse,1.0) ;
-    //outputColor  = vec4(pNormal,1.0) ;
+    //outputColor  = vec4(tNormal,1.0) ;
 
 }

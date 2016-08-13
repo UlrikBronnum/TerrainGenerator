@@ -85,4 +85,10 @@ class ofApp : public ofBaseApp{
 
 
 		TreeGenerator tree;
+
+
+		vector<ofVec3f> positions;
+		vector<float> rotations;
+		vector<ofVec3f> scale;
+		
 };

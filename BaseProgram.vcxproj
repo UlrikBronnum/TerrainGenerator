@@ -179,11 +179,14 @@
     <ClCompile Include="src\lalala.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainApp.cpp" />
+    <ClCompile Include="src\MeshContainer.cpp" />
     <ClCompile Include="src\MoveCam.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
+    <ClCompile Include="src\ShaderContainer.cpp" />
     <ClCompile Include="src\TextureContainer.cpp" />
     <ClCompile Include="src\TreeGenerator.cpp" />
     <ClCompile Include="src\WaterErosion.cpp" />
+    <ClCompile Include="src\WorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseHeightmapCreater.h" />
@@ -193,11 +196,14 @@
     <ClInclude Include="src\ImageProcessing.h" />
     <ClInclude Include="src\lalala.h" />
     <ClInclude Include="src\MainApp.h" />
+    <ClInclude Include="src\MeshContainer.h" />
     <ClInclude Include="src\MoveCam.h" />
     <ClInclude Include="src\ofApp.h" />
+    <ClInclude Include="src\ShaderContainer.h" />
     <ClInclude Include="src\TextureContainer.h" />
     <ClInclude Include="src\TreeGenerator.h" />
     <ClInclude Include="src\WaterErosion.h" />
+    <ClInclude Include="src\WorldObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

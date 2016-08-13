@@ -94,7 +94,13 @@ void ofApp::setup()
 {
 	dims = 513;
 
-
+	for (int i = 0; i < 20; i++) 
+	{
+		positions.push_back(ofVec3f(ofRandom(-250,250), ofRandom(-250, 250),0) );
+		rotations.push_back(ofRandom(0, 360));
+		float xyScale = ofRandom(1.0, 3.0);
+		scale.push_back(ofVec3f(xyScale, xyScale, ofRandom(0.8, 3.0)));
+	}
 
 	bhc.setup(dims);
 
@@ -157,21 +163,25 @@ void ofApp::setup()
 
 
 	treeShader.load("res/shaders/meshNormal.vert", "res/shaders/meshNormal.frag");
-	tree.generate(treeMesh);
+	tree.update(treeMesh);
 	treeMesh.loadAttributes(treeShader);
 	
 	treeDiffuse.loadImage("res/textures/barkD.jpg");
+	treeDiffuse.resize(512, 512);
 	treeDiffuse.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
 	treeDiffuse.getTexture().generateMipmap();
-	treeDiffuse.getTexture().setTextureMinMagFilter(GL_NEAREST_MIPMAP_NEAREST, GL_LINEAR);
+	treeDiffuse.getTexture().setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+
 	treeNormal.loadImage("res/textures/barkN.png");
+	treeNormal.resize(512, 512);
 	treeNormal.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
 	treeNormal.getTexture().generateMipmap();
-	treeNormal.getTexture().setTextureMinMagFilter(GL_NEAREST_MIPMAP_NEAREST, GL_LINEAR);
+	treeNormal.getTexture().setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
 
-	camera.lookAt(tree.getStart());
-	camera.setCamPosition(tree.getStart() + ofVec3f(0, 0, 10));
 	
+	camera.setCamPosition(tree.getStart() + ofVec3f(0,10,0));
+	camera.rotateToPoint(tree.getStart());
+
 	//camera.setCamPosition(mesh.getCenter() + ofVec3f(0, 0, 3000));
 	//camera.lookAt(mesh.getCenter());
 
@@ -227,6 +237,10 @@ void ofApp::update()
 {
 	camera.update();
 	eroder.update();
+
+	if( tree.update(treeMesh) ){
+		treeMesh.loadAttributes(treeShader);
+	}
 }
 
 //--------------------------------------------------------------
@@ -323,40 +337,63 @@ void ofApp::draw()
 	waterFlowChart.draw(0, bhc.getMenu()->getHeight() + bhc.getMenu()->getWidth() + eroder.getMenu()->getHeight(), 256, 256);
 
 
-
 	ofDisableDepthTest();
+	
 	*/
 	
 	
 	
 
 	ofSetBackgroundColor(0);
+
 	treeFbo.begin();
 	ofClear(0, 0, 0, 255);
-		camera.begin();
-	
-		ofEnableDepthTest();
 
-		ofPushMatrix();
+		
+		camera.begin();
+		ofEnableDepthTest();		
+			
 			treeShader.begin();
 			treeShader.setUniformTexture("tex0", treeDiffuse.getTexture(), 1);
 			treeShader.setUniformTexture("tex1", treeNormal.getTexture(), 2);
 			treeShader.setUniform3f("ambientLight", ofVec3f(0.5f));
 			treeShader.setUniform4f("lightPos", lightPosition);
-			treeShader.setUniform4f("tiling", ofVec4f(1, 0.5, 0, 0));
+			treeShader.setUniform4f("tiling", ofVec4f(1, 0.2, 0, 0));
 
-			treeMesh.draw();
+			for (int i = 0; i < positions.size(); i++) 
+			{
+				ofPushMatrix();
+				ofScale(scale[i]);
+				ofTranslate(positions[i]);
+				ofRotateZ(rotations[i]);
+				
+				treeMesh.draw();
 
+				ofPopMatrix();
+			}
+				
 			treeShader.end();
 
-			treeMesh.drawNormals();
-		ofPopMatrix();
+			//treeMesh.drawNormals();
+		
 
+		ofDisableDepthTest();
 		camera.end();
+		
+
 	treeFbo.end();
 
-	//treeFbo.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
+	ofSetColor(255, 255, 255);
+	treeFbo.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
+	
+	ofPushMatrix();
 	ofDisableDepthTest();
+	ofSetColor(255, 255, 255);
+	tree.draw();
+	ofPopMatrix();
+
+	
+	
 
 	depthFbo.begin();
 		depthShader.begin();
@@ -369,19 +406,22 @@ void ofApp::draw()
 		depthShader.end();
 	depthFbo.end();
 
-	ofSetColor(255, 255, 255);
-	depthFbo.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
+	
+	//depthFbo.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
+
+
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 	if (key == 13) {
 		//waterErodeClass();
-		tree.generate(treeMesh);
-		treeMesh.loadAttributes(treeShader);
+		//treeMesh.loadAttributes(treeShader);
 		
 	}
-
+	if (key == 'm') {
+		treeMesh.save();
+	}
 	if (key == 'e') {
 		string fileName = "test.raw";
 		ofBuffer buffer((const char*)eroder.getHeightMap()->getPixels(), eroder.getHeightMap()->getWidth() * eroder.getHeightMap()->getHeight());
